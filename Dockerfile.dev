@@ -1,0 +1,3 @@
+# Node toolchain for build/test. Bind-mount the repo; do not install Node on the host.
+FROM node:24.18.0-alpine
+WORKDIR /app

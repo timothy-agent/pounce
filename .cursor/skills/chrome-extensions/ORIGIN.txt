@@ -1,0 +1,3 @@
+Source: https://github.com/GoogleChrome/modern-web-guidance
+Path: skills/chrome-extensions
+Commit: 457c381

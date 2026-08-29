@@ -1,0 +1,37 @@
+{
+  "name": "pounce",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Clip the current page into your Timothy knowledgebase.",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "test": "vitest run",
+    "lint": "oxlint src"
+  },
+  "dependencies": {
+    "@mozilla/readability": "^0.6.0",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "react-markdown": "^10.1.0",
+    "remark-gfm": "^4.0.1",
+    "turndown": "^7.2.2",
+    "turndown-plugin-gfm": "^1.0.2"
+  },
+  "devDependencies": {
+    "@crxjs/vite-plugin": "^2.7.1",
+    "@tailwindcss/vite": "^4.1.18",
+    "@types/chrome": "^0.1.36",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.5",
+    "@types/turndown": "^5.0.6",
+    "@vitejs/plugin-react": "^5.1.4",
+    "jsdom": "^27.4.0",
+    "oxlint": "^1.80.0",
+    "tailwindcss": "^4.1.18",
+    "typescript": "~5.9.3",
+    "vite": "^7.3.1",
+    "vitest": "^3.2.4"
+  }
+}
