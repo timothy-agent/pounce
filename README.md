@@ -39,11 +39,9 @@ Then in Chrome: `chrome://extensions` → Developer mode → Load unpacked → s
 
 Options page (right-click the icon → Options, or the Options link in the popup):
 
-- **Timothy base URL** — the URL you open Timothy in. Must serve `/v1/admin`. HTTPS
-  except localhost.
-- **API token** — the same admin bearer token (`TIMOTHY_API_TOKEN`). Stored in
-  `chrome.storage.local` on this device only; never synced.
-- **Default collection** — a specific collection, or auto-classify.
+- **Timothy base URL.** The URL you open Timothy in. HTTPS except localhost.
+- **API token.** The same admin bearer token (`TIMOTHY_API_TOKEN`). Stored on this device only. Never synced.
+- **Default collection.** A specific collection, or auto-classify.
 
 Saving the base URL prompts for host permission to that origin only.
 

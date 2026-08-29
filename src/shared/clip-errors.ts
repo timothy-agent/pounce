@@ -1,7 +1,7 @@
 export const RESTRICTED_TAB_MESSAGE =
-  'Can only clip http(s) pages. This tab is restricted (chrome://, Web Store, PDF viewer, …).'
+  'You can only clip http or https pages. This tab is restricted.'
 
-export const RESTRICTED_TAB_SHORT = 'Can only clip http(s) pages. This tab is restricted.'
+export const RESTRICTED_TAB_SHORT = RESTRICTED_TAB_MESSAGE
 
 export const PAGE_UNREACHABLE_MESSAGE = 'Could not reach this page. Reload the tab and try again.'
 

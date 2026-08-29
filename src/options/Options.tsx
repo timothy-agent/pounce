@@ -2,7 +2,7 @@ import { useEffect, useState, type FormEvent } from 'react'
 
 import { callWorker } from '../shared/bridge'
 import { connectionStatus, type ConnectionStatus } from '../shared/connection'
-import { PRIVACY_POLICY_URL } from '../shared/constants'
+import { PRIVACY_POLICY_URL, TIMOTHY_GITHUB_URL } from '../shared/constants'
 import type { KbCollection } from '../shared/messages'
 import { requestHostAccess } from '../shared/permissions'
 import { isConfigured, loadSettings, saveSettings } from '../shared/settings'
@@ -115,8 +115,8 @@ export function Options() {
 
         <Notice kind="info" title="What Pounce stores and sends">
           The Timothy URL and API token stay on this device. When you clip a page, Pounce
-          reads that tab and, only after you click Send, transmits the URL, title, and
-          markdown to the Timothy URL you save — not to us, and not to advertisers.{' '}
+          reads that tab. Nothing is sent until you click "Send to Timothy". Then the URL, title, and
+          markdown go only to the Timothy URL you have configured.{' '}
           <a
             className="font-medium underline underline-offset-2"
             href={PRIVACY_POLICY_URL}
@@ -153,8 +153,7 @@ export function Options() {
               spellCheck={false}
             />
             <span className="mt-1.5 block text-xs font-normal text-muted-foreground">
-              The URL you open Timothy in. HTTPS required except localhost. Must serve{' '}
-              <code className="rounded bg-muted px-1 py-0.5 font-mono">/v1/admin</code>.
+              The URL you open Timothy in. HTTPS required except localhost.
             </span>
           </label>
 
@@ -209,21 +208,32 @@ export function Options() {
                 onChange={(e) => setConsent(e.target.checked)}
               />
               <span>
-                I agree that Pounce may store these settings on this device and, when I
-                clip a page, send that page’s content only to this Timothy URL.
+                I agree. Pounce may store these settings on this device. When I clip a
+                page, it may send that page only to this Timothy URL.
               </span>
             </label>
           ) : null}
 
           <div className="flex gap-2">
             <button type="submit" disabled={busy || (!configured && !consent)} className={btnPrimary}>
-              {busy ? 'Working…' : 'Save'}
+              {busy ? 'Working...' : 'Save'}
             </button>
             <button type="button" disabled={busy} className={btnSecondary} onClick={() => void onTest()}>
               Test connection
             </button>
           </div>
         </form>
+
+        <p className="text-center text-xs text-muted-foreground">
+          <a
+            className="font-medium underline underline-offset-2"
+            href={TIMOTHY_GITHUB_URL}
+            target="_blank"
+            rel="noreferrer"
+          >
+            Timothy on GitHub
+          </a>
+        </p>
       </div>
     </div>
   )

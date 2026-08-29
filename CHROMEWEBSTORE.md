@@ -1,4 +1,4 @@
-# Chrome Web Store Listing — Pounce
+# Chrome Web Store Listing: Pounce
 
 > Last Updated: 2026-08-29
 
@@ -32,15 +32,15 @@ PRIVACY
 Pounce stores the Timothy URL and API token on this device only (not synced). It does not record browsing history. Website content is read only when you clip, and is sent only to your Timothy instance when you click Send. Privacy policy: https://github.com/timothy-agent/pounce/blob/main/PRIVACY.md
 
 PERMISSIONS
-• Access the current tab when you click Pounce or use “Clip selection to Timothy” — needed to read the page you asked to clip
-• Store settings on this device — needed for the Timothy URL, token, and default collection
-• Optional access to your Timothy site — requested when you save Options, so Pounce can reach that instance only
+• Access the current tab when you click Pounce or use "Clip selection to Timothy". Needed to read the page you asked to clip.
+• Store settings on this device. Needed for the Timothy URL, token, and default collection.
+• Optional access to your Timothy site. Requested when you save Options, so Pounce can reach that instance only.
 
 SUPPORT
 Bugs and questions: https://github.com/timothy-agent/pounce/issues
 Security reports: see https://github.com/timothy-agent/pounce/blob/main/SECURITY.md
 
-Version 1.0.0 — first public listing.
+Version 1.0.0. First public listing.
 
 **Category** [REQUIRED]
 Productivity
@@ -90,19 +90,19 @@ Do not add `tabs`. `tab.url` is read only after an `activeTab` user gesture (too
 
 ### Data Collection
 
-**Does the extension collect user data?** Yes — only what the operator sends to their own Timothy instance, plus settings stored locally.
+**Does the extension collect user data?** Yes. Only what the operator sends to their own Timothy instance, plus settings stored locally.
 
 | Data Type | Collected? | Transmitted Off-Device? | Purpose | Shared with Third Parties? |
 |-----------|-----------|------------------------|---------|---------------------------|
 | Personally identifiable info | No | No | | |
 | Health info | No | No | | |
 | Financial info | No | No | | |
-| Authentication info | Yes (API token) | Yes — to the operator’s Timothy URL only | Bearer token for the Timothy admin API | No (not to Pounce authors; only to the URL the operator configured) |
+| Authentication info | Yes (API token) | Yes. To the operator's Timothy URL only | Bearer token for the Timothy admin API | No (not to Pounce authors; only to the URL the operator configured) |
 | Personal communications | No | No | | |
 | Location | No | No | | |
 | Web history | No | No | | |
 | User activity | No | No | | |
-| Website content | Yes (page URL, title, markdown of the clipped page or selection) | Yes — to the operator’s Timothy URL only | Create a knowledgebase document | No |
+| Website content | Yes (page URL, title, markdown of the clipped page or selection) | Yes. To the operator's Timothy URL only | Create a knowledgebase document | No |
 
 Local only: Timothy base URL, API token, default collection id (`chrome.storage.local`, this device, not synced).
 
@@ -113,7 +113,7 @@ Not used: analytics, ads, `chrome.storage.sync`, remote scripts, CDNs.
 - [x] Data is NOT used for purposes unrelated to the extension's core functionality
 - [x] Data is NOT used for creditworthiness or lending purposes
 
-CWS disclosure checkboxes: user activity / website content / authentication — transmitted only to the operator-configured host. Not sold. Not used for unrelated purposes.
+CWS disclosure checkboxes: user activity / website content / authentication. Transmitted only to the operator-configured host. Not sold. Not used for unrelated purposes.
 
 ## Privacy Policy
 

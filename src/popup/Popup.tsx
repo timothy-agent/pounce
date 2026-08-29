@@ -82,7 +82,7 @@ export function Popup() {
         {busy ? (
         <div className="flex flex-col items-center gap-2 py-10 text-sm text-muted-foreground">
           <span className="size-5 animate-spin rounded-full border-2 border-border border-t-brand" aria-hidden="true" />
-          Extracting this tab on this device…
+          Extracting this tab...
         </div>
       ) : !settings?.configured ? (
         <>
@@ -123,8 +123,8 @@ export function Popup() {
             <>
               {clip.weak ? (
                 <Notice kind="warning" title="Extraction looks weak">
-                  Review the markdown before sending, or select the text you want and use “Clip
-                  selection to Timothy”.
+                  Review the markdown before you send. Or select text and use "Clip selection
+                  to Timothy".
                 </Notice>
               ) : null}
               <label className="block text-xs font-medium text-muted-foreground">
@@ -193,9 +193,9 @@ export function Popup() {
                   {error}
                 </Notice>
               ) : null}
-              <Notice kind="info" title="Nothing leaves this device until Send">
-                Send transmits this tab’s URL, title, and markdown to {settings.baseUrl}.
-                Pounce does not bypass logins or paywalls; it only reads the page you opened.
+              <Notice kind="info" title="We don't collect or monitor any data">
+                Pounce sends the URL, title, and markdown to {settings.baseUrl} only when you click "Send to Timothy". 
+                Pounce only reads the page you opened. It does not monitor, track, or collect any data.
               </Notice>
               <button
                 type="button"
@@ -220,7 +220,7 @@ export function Popup() {
                   })()
                 }}
               >
-                {sending ? 'Sending…' : 'Send to Timothy'}
+                {sending ? 'Sending...' : 'Send to Timothy'}
               </button>
             </>
           ) : null}
