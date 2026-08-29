@@ -1,0 +1,7 @@
+# local plans and research, never committed
+docs/
+
+node_modules/
+dist/
+*.log
+.DS_Store
