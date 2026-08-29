@@ -9,9 +9,6 @@ Because extraction happens in your browser, Pounce can clip the tab you already
 have open: signed-in sites and JavaScript-rendered pages. It does not bypass
 logins or paywalls. It only reads the page you asked to clip.
 
-> Status: early development. Requires a Timothy instance that implements
-> `POST /v1/admin/kb/documents/clip` (see below).
-
 ## How it works
 
 1. Click the Pounce button (or clip a selection via the context menu).
@@ -62,46 +59,11 @@ make dev       # Vite HMR; still load the unpacked extension from dist/ after bu
 
 No host Node install. Named Docker volumes cache `node_modules` and the npm cache.
 
-## Timothy API this extension calls
-
-Auth on every request: `Authorization: Bearer <token>`.
-
-JSON errors are `{ "error": "<code>", "message": "<text>" }` (existing brain shape).
-
-### Already exists
-
-`GET /v1/admin/kb/collections` → `{ "collections": [ { "id", "name", ... } ] }`
-
-Used to fill the collection picker.
-
-### Needed
-
-`POST /v1/admin/kb/documents/clip`
-
-```json
-{
-  "url": "https://example.com/article",
-  "markdown": "# Article title\n\n..."
-}
-```
-
-- `title` is optional and may be `""`. Pounce sends the popup value as-is (extracted title, or empty if the operator cleared it).
-- `collection_id` is optional. Omit it (the usual case) and Timothy classifies the
-  document itself. Send a UUID only when the operator picked a collection in the popup.
-- `url` is http(s), fragment and `utm_*` / `fbclid` / `gclid` already stripped client-side.
-- `markdown` is non-empty. The popup refuses payloads above **128 KiB** UTF-8 (same cap
-  as Timothy's `TruncateMarkdown`). Oversize should also 413 from the server.
-- Response: **202 Accepted** plus the document JSON (markdown omitted). Ingest is
-  queued; the popup does not wait for it. Link: `{baseUrl}/knowledge/{collection_id}`.
-
-Re-clip, collection assignment, ingest: all server-side. The extension only sends the
-payload above.
-
 ## Security
 
 See [SECURITY.md](SECURITY.md) for the vulnerability reporting process.
 
-See [PRIVACY.md](PRIVACY.md) for what Pounce stores and sends (required for Chrome Web Store listing).
+See [PRIVACY.md](PRIVACY.md) for what Pounce stores and sends.
 
 The API token never enters the page. Content scripts are injected only when you clip.
 Clipped HTML is converted to markdown in the isolated world and rendered in the popup
