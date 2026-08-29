@@ -35,8 +35,8 @@ Pounce does not run on other tabs, does not record browsing history, and does no
 
 Only to the Timothy base URL you saved, over HTTPS (HTTP is allowed only for localhost):
 
-- `GET /v1/admin/kb/collections` — list collections (uses the token)
-- `POST /v1/admin/kb/documents/clip` — URL, title, markdown, optional collection id (uses the token)
+- `GET /v1/admin/kb/collections`: list collections (uses the token)
+- `POST /v1/admin/kb/documents/clip`: URL, title, markdown, optional collection id (uses the token)
 
 Nothing is sent until you save Options (token + URL) and later click **Send to Timothy**. Extraction in the popup stays on the device until Send.
 

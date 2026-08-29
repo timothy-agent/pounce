@@ -96,7 +96,7 @@ async function extractTab(mode: ExtractMode): Promise<ClipPayload> {
 async function clientFromSettings() {
   const settings = await loadSettings()
   if (!isConfigured(settings)) {
-    throw new Error('Set the Timothy base URL and API token on the options page first.')
+    throw new Error('Set the Timothy URL and API token in Options first.')
   }
   return { settings, client: createClient({ baseUrl: settings.baseUrl, token: settings.token }) }
 }

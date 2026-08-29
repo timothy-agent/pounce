@@ -104,7 +104,7 @@ describe('createClient', () => {
     })
     await expect(tooBig.listCollections()).rejects.toMatchObject({
       status: 413,
-      message: 'Clip is too large. Trim the markdown and retry.',
+      message: 'Clip is too large. Trim the markdown and try again.',
     })
 
     const boom = createClient({

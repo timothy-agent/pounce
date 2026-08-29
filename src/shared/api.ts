@@ -37,10 +37,10 @@ async function readError(res: Response): Promise<ApiError> {
     // Non-JSON body: keep the raw text.
   }
   if (res.status === 401) {
-    return new ApiError(401, code, 'Token rejected. Update it on the options page.')
+    return new ApiError(401, code, 'Token rejected. Update it in Options.')
   }
   if (res.status === 413) {
-    return new ApiError(413, code, 'Clip is too large. Trim the markdown and retry.')
+    return new ApiError(413, code, 'Clip is too large. Trim the markdown and try again.')
   }
   return new ApiError(res.status, code, message)
 }
@@ -58,13 +58,13 @@ export function clipPayload(body: ClipRequest): ClipRequest {
 
 export function assertMarkdownSize(markdown: string): void {
   if (!markdown.trim()) {
-    throw new ApiError(400, 'bad_request', 'Markdown is empty. Select the text you want, or review the extraction.')
+    throw new ApiError(400, 'bad_request', 'Markdown is empty. Select text, or check the extract.')
   }
   if (utf8Bytes(markdown) > MAX_MARKDOWN_BYTES) {
     throw new ApiError(
       413,
       'too_large',
-      `Markdown is ${(utf8Bytes(markdown) / 1024).toFixed(1)} KiB; Timothy caps clips at 128 KiB. Trim it before sending.`,
+      `This clip is ${(utf8Bytes(markdown) / 1024).toFixed(1)} KiB. The limit is 128 KiB. Trim it before sending.`,
     )
   }
 }
@@ -85,7 +85,7 @@ export function createClient(opts: { baseUrl: string; token: string; fetch?: Fet
       throw new ApiError(
         0,
         'unreachable',
-        'Timothy is unreachable. Check the base URL and that the instance is running.',
+        'Timothy is unreachable. Check the base URL. Check that the instance is running.',
       )
     }
     if (!res.ok) {

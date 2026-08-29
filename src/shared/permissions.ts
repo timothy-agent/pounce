@@ -6,6 +6,6 @@ export async function requestHostAccess(baseUrl: string): Promise<void> {
   if (already) return
   const granted = await chrome.permissions.request({ origins: [origin] })
   if (!granted) {
-    throw new Error('Host permission was not granted. Pounce cannot reach Timothy without it.')
+    throw new Error('Host permission was not granted. Pounce needs it to reach Timothy.')
   }
 }

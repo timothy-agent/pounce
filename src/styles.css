@@ -21,6 +21,9 @@
   --color-warning-soft-foreground: var(--warning-soft-foreground);
   --color-good: var(--good);
   --color-good-soft: var(--good-soft);
+  --color-info: var(--info);
+  --color-info-soft: var(--info-soft);
+  --color-info-soft-foreground: var(--info-soft-foreground);
   --radius-md: 0.5rem;
 }
 
@@ -44,6 +47,9 @@
   --warning-soft-foreground: oklch(0.48 0.12 75);
   --good: oklch(0.6 0.15 155);
   --good-soft: oklch(0.94 0.04 155);
+  --info: oklch(0.55 0.14 250);
+  --info-soft: oklch(0.96 0.03 250);
+  --info-soft-foreground: oklch(0.38 0.1 250);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -61,6 +67,8 @@
     --warning-soft: oklch(0.28 0.06 75);
     --warning-soft-foreground: oklch(0.86 0.08 75);
     --good-soft: oklch(0.28 0.05 155);
+    --info-soft: oklch(0.28 0.06 250);
+    --info-soft-foreground: oklch(0.86 0.06 250);
   }
 }
 

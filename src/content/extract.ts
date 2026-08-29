@@ -14,7 +14,7 @@ function handle(req: ContentExtractRequest): ContentExtractResponse {
       if (!clip) {
         return {
           ok: false,
-          error: 'No text selected. Select the passage you want, then clip the selection.',
+          error: 'No text selected. Select the text you want, then clip the selection.',
         }
       }
       return { ok: true, data: clip }

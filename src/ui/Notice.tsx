@@ -7,14 +7,14 @@ const styles: Record<NoticeKind, string> = {
     'border-destructive/25 bg-destructive-soft text-destructive-soft-foreground',
   warning: 'border-warning/30 bg-warning-soft text-warning-soft-foreground',
   success: 'border-good/30 bg-good-soft text-good',
-  info: 'border-border bg-muted text-foreground',
+  info: 'border-info/30 bg-info-soft text-info-soft-foreground',
 }
 
 const accent: Record<NoticeKind, string> = {
   error: 'bg-destructive',
   warning: 'bg-warning',
   success: 'bg-good',
-  info: 'bg-muted-foreground/40',
+  info: 'bg-info',
 }
 
 function Icon({ kind }: { kind: NoticeKind }) {

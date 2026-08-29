@@ -33,8 +33,8 @@ describe('mapChromeClipError', () => {
   })
 
   it('leaves other messages unchanged', () => {
-    expect(mapChromeClipError('Token rejected. Update it on the options page.')).toBe(
-      'Token rejected. Update it on the options page.',
+    expect(mapChromeClipError('Token rejected. Update it in Options.')).toBe(
+      'Token rejected. Update it in Options.',
     )
   })
 })
