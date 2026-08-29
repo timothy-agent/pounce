@@ -1,0 +1,117 @@
+@import 'tailwindcss';
+
+@theme inline {
+  --font-sans: ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', Menlo, monospace;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-brand: var(--brand);
+  --color-brand-foreground: var(--brand-foreground);
+  --color-brand-soft: var(--brand-soft);
+  --color-brand-soft-foreground: var(--brand-soft-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-soft: var(--destructive-soft);
+  --color-destructive-soft-foreground: var(--destructive-soft-foreground);
+  --color-warning: var(--warning);
+  --color-warning-soft: var(--warning-soft);
+  --color-warning-soft-foreground: var(--warning-soft-foreground);
+  --color-good: var(--good);
+  --color-good-soft: var(--good-soft);
+  --radius-md: 0.5rem;
+}
+
+:root {
+  color-scheme: light dark;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.45 0 0);
+  --border: oklch(0.9 0 0);
+  --input: oklch(0.9 0 0);
+  --brand: oklch(0.66 0.19 46);
+  --brand-foreground: oklch(0.99 0 0);
+  --brand-soft: oklch(0.95 0.04 55);
+  --brand-soft-foreground: oklch(0.5 0.16 46);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-soft: oklch(0.96 0.02 27);
+  --destructive-soft-foreground: oklch(0.45 0.16 27);
+  --warning: oklch(0.72 0.15 75);
+  --warning-soft: oklch(0.95 0.05 75);
+  --warning-soft-foreground: oklch(0.48 0.12 75);
+  --good: oklch(0.6 0.15 155);
+  --good-soft: oklch(0.94 0.04 155);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: oklch(0.16 0 0);
+    --foreground: oklch(0.985 0 0);
+    --muted: oklch(0.24 0 0);
+    --muted-foreground: oklch(0.72 0 0);
+    --border: oklch(0.3 0 0);
+    --input: oklch(0.3 0 0);
+    --brand-soft: oklch(0.28 0.06 46);
+    --brand-soft-foreground: oklch(0.86 0.08 55);
+    --destructive-soft: oklch(0.28 0.06 27);
+    --destructive-soft-foreground: oklch(0.86 0.06 27);
+    --warning-soft: oklch(0.28 0.06 75);
+    --warning-soft-foreground: oklch(0.86 0.08 75);
+    --good-soft: oklch(0.28 0.05 155);
+  }
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  min-height: 100%;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+}
+
+.prose-clip :where(h1, h2, h3) {
+  font-weight: 600;
+  margin: 0.6em 0 0.3em;
+}
+.prose-clip :where(p, ul, ol) {
+  margin: 0.4em 0;
+}
+.prose-clip :where(ul, ol) {
+  padding-left: 1.2em;
+}
+.prose-clip :where(a) {
+  color: var(--brand);
+}
+.prose-clip :where(pre) {
+  overflow: auto;
+  font-size: 0.8em;
+  background: var(--muted);
+  padding: 0.5em;
+  border-radius: 0.4em;
+}
+.prose-clip :where(code) {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+}
+.prose-clip :where(table) {
+  width: 100%;
+  font-size: 0.85em;
+  border-collapse: collapse;
+}
+.prose-clip :where(th, td) {
+  border: 1px solid var(--border);
+  padding: 0.2em 0.4em;
+}
+.prose-clip :where(img) {
+  max-width: 100%;
+}

@@ -1,0 +1,9 @@
+node_modules
+dist
+coverage
+.git
+docs
+*.log
+.DS_Store
+.claude
+.cursor

@@ -1,7 +1,23 @@
-# local plans and research, never committed
-docs/
+# Local env / secrets
+.env
+.env.*
+*.pem
+*.key
 
+# Web
 node_modules/
 dist/
+coverage/
+
+# Local-only development docs
+docs/
+
+# Editor / agent tooling
+.claude/
+.cursor/*
+!.cursor/skills/
+!.cursor/skills/**
+.idea/
+.vscode/
 *.log
 .DS_Store
