@@ -9,8 +9,6 @@ Because extraction happens in your browser, Pounce can clip the tab you already
 have open: signed-in sites and JavaScript-rendered pages. It does not bypass
 logins or paywalls. It only reads the page you asked to clip.
 
-> Requires a Timothy instance with the admin knowledgebase APIs below.
-
 ## How it works
 
 1. Click the Pounce button (or clip a selection via the context menu).
@@ -60,38 +58,6 @@ make dev       # Vite HMR; still load the unpacked extension from dist/ after bu
 ```
 
 No host Node install. Named Docker volumes cache `node_modules` and the npm cache.
-
-## Timothy API
-
-Pounce calls only the Timothy base URL you configure. Every request includes
-`Authorization: Bearer <token>`. JSON errors look like
-`{ "error": "<code>", "message": "<text>" }`.
-
-### `GET /v1/admin/kb/collections`
-
-Returns `{ "collections": [ { "id", "name", ... } ] }`. Used for the collection
-picker on Options and in the popup.
-
-### `POST /v1/admin/kb/documents/clip`
-
-```json
-{
-  "url": "https://example.com/article",
-  "title": "",
-  "markdown": "# Heading\n\n…"
-}
-```
-
-- `url` (required) — `http` or `https`. Fragment and tracking params (`utm_*`,
-  `fbclid`, `gclid`) are stripped before send.
-- `markdown` (required) — non-empty, at most 128 KiB UTF-8.
-- `title` — optional; empty string is allowed.
-- `collection_id` — optional. Sent only when you pick a collection; omitted so
-  Timothy can auto-classify.
-
-A successful clip is **202 Accepted** with the document JSON (markdown omitted).
-Ingest continues on the server. Pounce links to
-`{baseUrl}/knowledge/{collection_id}`.
 
 ## Security
 
