@@ -1,8 +1,8 @@
 # Security Policy
 
-Pounce holds an API token for your Timothy instance in browser extension storage and
-reads page content from your authenticated browser session. Vulnerabilities in any of
-that are worth reporting.
+Pounce reads page content from your authenticated browser session and can hold an
+API token for your Timothy instance in browser extension storage. Vulnerabilities
+in any of that are worth reporting.
 
 ## Reporting a vulnerability
 

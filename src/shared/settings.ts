@@ -43,4 +43,8 @@ export async function saveSettings(next: Settings): Promise<Settings> {
   return settings
 }
 
+export async function clearTimothySettings(): Promise<void> {
+  await chrome.storage.local.remove([...KEYS])
+}
+
 export { empty as emptySettings }

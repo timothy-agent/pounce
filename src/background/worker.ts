@@ -168,7 +168,7 @@ chrome.runtime.onInstalled.addListener(() => {
   chrome.contextMenus.removeAll(() => {
     chrome.contextMenus.create({
       id: CONTEXT_MENU_SELECTION,
-      title: 'Clip selection to Timothy',
+      title: 'Clip selection with Pounce',
       contexts: ['selection'],
     })
   })

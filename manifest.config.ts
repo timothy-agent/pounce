@@ -3,21 +3,21 @@ import { defineManifest } from '@crxjs/vite-plugin'
 export default defineManifest({
   manifest_version: 3,
   name: 'Pounce',
-  version: '1.0.0',
-  description: 'Clip the current page into your Timothy knowledgebase.',
+  version: '1.1.0',
+  description: 'Clip the current page as markdown for LLMs. Optionally send to Timothy.',
   icons: {
     '16': 'assets/brand/timothy-mark-16.png',
     '32': 'assets/brand/timothy-mark-32.png',
-    '48': 'assets/brand/timothy-mark-64.png',
+    '48': 'assets/brand/timothy-mark-48.png',
     '128': 'assets/brand/timothy-mark-128.png',
   },
   action: {
-    default_title: 'Clip to Timothy',
+    default_title: 'Clip page as markdown',
     default_popup: 'src/popup/popup.html',
     default_icon: {
       '16': 'assets/brand/timothy-mark-16.png',
       '32': 'assets/brand/timothy-mark-32.png',
-      '48': 'assets/brand/timothy-mark-64.png',
+      '48': 'assets/brand/timothy-mark-48.png',
       '128': 'assets/brand/timothy-mark-128.png',
     },
   },
@@ -29,7 +29,7 @@ export default defineManifest({
     service_worker: 'src/background/worker.ts',
     type: 'module',
   },
-  permissions: ['activeTab', 'scripting', 'storage', 'contextMenus'],
+  permissions: ['activeTab', 'scripting', 'storage', 'contextMenus', 'downloads'],
   optional_host_permissions: ['http://*/*', 'https://*/*'],
   browser_specific_settings: {
     gecko: {

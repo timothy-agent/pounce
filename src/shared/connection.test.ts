@@ -3,9 +3,9 @@ import { describe, expect, it } from 'vitest'
 import { connectionLabel, connectionStatus } from './connection'
 
 describe('connectionStatus', () => {
-  it('is offline until settings exist', () => {
-    expect(connectionStatus({ configured: false, apiOk: null })).toBe('offline')
-    expect(connectionStatus({ configured: false, apiOk: true })).toBe('offline')
+  it('is idle until Timothy settings exist', () => {
+    expect(connectionStatus({ configured: false, apiOk: null })).toBe('idle')
+    expect(connectionStatus({ configured: false, apiOk: true })).toBe('idle')
   })
 
   it('is checking while the API probe is in flight', () => {
@@ -23,5 +23,6 @@ describe('connectionLabel', () => {
     expect(connectionLabel('online')).toMatch(/Connected/)
     expect(connectionLabel('offline')).toMatch(/Not connected/)
     expect(connectionLabel('checking')).toMatch(/Checking/)
+    expect(connectionLabel('idle')).toMatch(/not configured/)
   })
 })

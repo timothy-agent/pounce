@@ -43,7 +43,7 @@ When submitting:
 A few rules are enforced in review and are not up for relaxation:
 
 - The API token never leaves extension storage except as a header on requests to the configured Timothy base URL, and never enters page context.
-- All network requests go to the operator-configured Timothy instance only. No third-party requests, no analytics, no runtime CDN loads.
+- All network requests go to the operator-configured Timothy instance only, and only after the operator connects Timothy and sends a clip. No third-party requests, no analytics, no runtime CDN loads.
 - Content scripts are injected on demand when the operator clips; nothing runs on pages the operator did not act on.
 - No bulk capture, crawling, or scheduled scraping features.
 - Clipped content is data, never markup or code: it is rendered escaped, with raw HTML disabled.
