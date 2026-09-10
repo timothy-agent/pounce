@@ -1,9 +1,9 @@
 # Pounce
 
-Official browser extension for [Timothy](https://github.com/timothy-agent/timothy).
-Clip the page you are reading into your Timothy knowledgebase: Pounce extracts the
-article from the rendered DOM, converts it to markdown in your browser, and sends it
-to your own Timothy instance.
+Clip the page you are reading as markdown: Pounce extracts the article from the
+rendered DOM, converts it in your browser, then lets you copy it for an LLM or
+save it as a `.md` file. Sending to [Timothy](https://github.com/timothy-agent/timothy)
+is optional.
 
 Because extraction happens in your browser, Pounce can clip the tab you already
 have open: signed-in sites and JavaScript-rendered pages. It does not bypass
@@ -12,16 +12,20 @@ logins or paywalls. It only reads the page you asked to clip.
 ## How it works
 
 1. Click the Pounce button (or clip a selection via the context menu).
-2. Review and edit the extracted markdown, pick a collection (or leave auto-classify).
-3. Send. The document lands in your Timothy knowledgebase and is indexed for retrieval.
+2. Review and edit the extracted markdown.
+3. **Copy for LLM** puts title, source URL, and markdown on the clipboard.
+   **Save as Markdown** downloads a `.md` file.
+4. If you have connected Timothy, a Timothy icon appears. Click it to queue the
+   clip in your knowledgebase.
 
-All requests go to the Timothy base URL you configure. No third-party services, no
-analytics, no external requests at runtime.
+Copy and save stay on this device. The only network request Pounce makes is to
+the Timothy base URL you configure, and only when you click the Timothy icon.
+No analytics, no third-party services.
 
 ## Requirements
 
-- A running [Timothy](https://github.com/timothy-agent/timothy) instance
 - Chrome (Manifest V3); Firefox 128+ should load the same bundle, untested
+- Optional: a running [Timothy](https://github.com/timothy-agent/timothy) instance
 
 ## Installation
 
@@ -37,13 +41,16 @@ Then in Chrome: `chrome://extensions` → Developer mode → Load unpacked → s
 
 ## Configuration
 
-Options page (right-click the icon → Options, or the Options link in the popup):
+Options are optional. Copy and save work with no setup.
+
+To send clips to Timothy (right-click the icon → Options):
 
 - **Timothy base URL.** The URL you open Timothy in. HTTPS except localhost.
 - **API token.** The same admin bearer token (`TIMOTHY_API_TOKEN`). Stored on this device only. Never synced.
 - **Default collection.** A specific collection, or auto-classify.
 
-Saving the base URL prompts for host permission to that origin only.
+Saving the base URL prompts for host permission to that origin only. Disconnect
+removes the saved credentials and hides the Timothy icon.
 
 ## Development
 

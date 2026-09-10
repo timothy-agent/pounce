@@ -1,8 +1,11 @@
 export const fieldClass =
-  'w-full rounded-lg border border-input bg-background px-3 py-2 text-sm text-foreground shadow-sm outline-none transition-shadow placeholder:text-muted-foreground focus:border-brand/50 focus:ring-2 focus:ring-brand/25'
+  'w-full rounded-md border border-input bg-card px-3.5 py-2 text-sm text-foreground outline-none transition-[border-color,box-shadow] placeholder:text-muted-foreground focus-visible:border-brand focus-visible:glow'
 
 export const btnPrimary =
-  'inline-flex items-center justify-center rounded-lg bg-brand px-3.5 py-2 text-sm font-medium text-brand-foreground shadow-sm transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-45'
+  'inline-flex h-9 items-center justify-center gap-2 rounded-md bg-brand px-3.5 text-sm font-medium text-brand-foreground transition-all hover:bg-brand/90 hover:glow focus-visible:glow disabled:pointer-events-none disabled:opacity-50'
 
 export const btnSecondary =
-  'inline-flex items-center justify-center rounded-lg border border-border bg-background px-3.5 py-2 text-sm font-medium text-foreground shadow-sm transition-colors hover:bg-muted disabled:cursor-not-allowed disabled:opacity-45'
+  'inline-flex h-9 items-center justify-center gap-2 rounded-md border border-input bg-card px-3.5 text-sm font-medium text-foreground transition-colors hover:bg-muted disabled:pointer-events-none disabled:opacity-50'
+
+export const btnIcon =
+  'inline-flex size-9 shrink-0 items-center justify-center rounded-md border border-input bg-card text-foreground transition-colors hover:bg-muted disabled:pointer-events-none disabled:opacity-50'

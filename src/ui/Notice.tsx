@@ -2,23 +2,22 @@ import type { ReactNode } from 'react'
 
 export type NoticeKind = 'error' | 'warning' | 'success' | 'info'
 
-const styles: Record<NoticeKind, string> = {
-  error:
-    'border-destructive/25 bg-destructive-soft text-destructive-soft-foreground',
-  warning: 'border-warning/30 bg-warning-soft text-warning-soft-foreground',
-  success: 'border-good/30 bg-good-soft text-good',
-  info: 'border-info/30 bg-info-soft text-info-soft-foreground',
+const tone: Record<NoticeKind, string> = {
+  error: 'border-l-destructive',
+  warning: 'border-l-warning',
+  success: 'border-l-good',
+  info: 'border-l-info',
 }
 
-const accent: Record<NoticeKind, string> = {
-  error: 'bg-destructive',
-  warning: 'bg-warning',
-  success: 'bg-good',
-  info: 'bg-info',
+const iconClass: Record<NoticeKind, string> = {
+  error: 'text-destructive',
+  warning: 'text-warning',
+  success: 'text-good',
+  info: 'text-info',
 }
 
 function Icon({ kind }: { kind: NoticeKind }) {
-  const common = 'mt-0.5 size-4 shrink-0 opacity-90'
+  const common = `mt-0.5 size-4 shrink-0 ${iconClass[kind]}`
   if (kind === 'success') {
     return (
       <svg viewBox="0 0 16 16" fill="none" className={common} aria-hidden="true">
@@ -63,15 +62,12 @@ export function Notice({
   return (
     <div
       role={kind === 'error' ? 'alert' : 'status'}
-      className={`relative overflow-hidden rounded-lg border ${styles[kind]}`}
+      className={`relative grid grid-cols-[16px_1fr] gap-x-3 rounded-md border border-border border-l-[3px] bg-card p-3 text-sm ${tone[kind]}`}
     >
-      <div className={`absolute inset-y-0 left-0 w-1 ${accent[kind]}`} />
-      <div className="flex gap-2.5 px-3 py-2.5 pl-3.5">
-        <Icon kind={kind} />
-        <div className="min-w-0 text-sm leading-5">
-          {title ? <p className="font-medium">{title}</p> : null}
-          {children ? <div className={title ? 'mt-0.5 opacity-90' : ''}>{children}</div> : null}
-        </div>
+      <Icon kind={kind} />
+      <div className="min-w-0 leading-5">
+        {title ? <p className="font-semibold">{title}</p> : null}
+        {children ? <div className={title ? 'mt-0.5 text-muted-foreground' : ''}>{children}</div> : null}
       </div>
     </div>
   )

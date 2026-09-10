@@ -5,8 +5,8 @@ import { connectionStatus, type ConnectionStatus } from '../shared/connection'
 import { PRIVACY_POLICY_URL, TIMOTHY_GITHUB_URL } from '../shared/constants'
 import type { KbCollection } from '../shared/messages'
 import { requestHostAccess } from '../shared/permissions'
-import { isConfigured, loadSettings, saveSettings } from '../shared/settings'
-import { normalizeBaseUrl } from '../shared/url'
+import { clearTimothySettings, isConfigured, loadSettings, saveSettings } from '../shared/settings'
+import { normalizeBaseUrl, originPattern } from '../shared/url'
 import { btnPrimary, btnSecondary, fieldClass } from '../ui/controls'
 import { AppHeader } from '../ui/Header'
 import { Notice } from '../ui/Notice'
@@ -74,7 +74,7 @@ export function Options() {
       setToken('')
       setTokenSaved(true)
       setConfigured(true)
-      setStatus('Settings saved on this device.')
+      setStatus('Timothy connection saved on this device.')
       try {
         const cols = await callWorker<KbCollection[]>({ type: 'LIST_COLLECTIONS' })
         setCollections(cols)
@@ -108,17 +108,50 @@ export function Options() {
     }
   }
 
+  async function onDisconnect() {
+    setError('')
+    setStatus('')
+    setBusy(true)
+    try {
+      const existing = await loadSettings()
+      if (existing.baseUrl) {
+        try {
+          await chrome.permissions.remove({ origins: [originPattern(existing.baseUrl)] })
+        } catch {
+          // Permission may already be gone.
+        }
+      }
+      await clearTimothySettings()
+      await chrome.storage.session.remove('collections')
+      setBaseUrl('')
+      setToken('')
+      setTokenSaved(false)
+      setDefaultCollectionId('')
+      setCollections([])
+      setConfigured(false)
+      setApiOk(false)
+      setConsent(false)
+      setStatus('Timothy disconnected. Copy and save still work.')
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Disconnect failed')
+    } finally {
+      setBusy(false)
+    }
+  }
+
   return (
     <div className="min-h-full bg-muted/40">
       <div className="mx-auto flex max-w-lg flex-col gap-5 p-8">
-        <AppHeader status={connection} subtitle="Clip pages into your Timothy knowledgebase." />
+        <AppHeader
+          status={connection}
+          subtitle="Clip pages as markdown for LLMs. Timothy is optional."
+        />
 
         <Notice kind="info" title="What Pounce stores and sends">
-          The Timothy URL and API token stay on this device. When you clip a page, Pounce
-          reads that tab. Nothing is sent until you click "Send to Timothy". Then the URL, title, and
-          markdown go only to the Timothy URL you have configured.{' '}
+          Copy for LLM and Save as Markdown stay on this device. Timothy URL and API token, if you
+          add them, also stay here. Nothing is sent off-device unless you click the Timothy icon.{' '}
           <a
-            className="font-medium underline underline-offset-2"
+            className="font-medium text-brand-text underline underline-offset-2"
             href={PRIVACY_POLICY_URL}
             target="_blank"
             rel="noreferrer"
@@ -127,11 +160,6 @@ export function Options() {
           </a>
         </Notice>
 
-        {ready && !configured ? (
-          <Notice kind="info" title="Not connected yet">
-            Save a base URL and API token. The status dot turns green when Timothy answers.
-          </Notice>
-        ) : null}
         {ready && configured && apiOk === false && !error ? (
           <Notice kind="warning" title="Timothy did not respond">
             Settings may still be saved. Check the URL and token, then test the connection.
@@ -139,11 +167,18 @@ export function Options() {
         ) : null}
 
         <form
-          className="flex flex-col gap-4 rounded-xl border border-border bg-background p-5 shadow-sm"
+          className="flex flex-col gap-4 border border-border bg-background p-5"
           onSubmit={(e) => void onSave(e)}
         >
+          <div>
+            <p className="text-sm font-semibold">Timothy</p>
+            <p className="mt-1 text-xs text-muted-foreground">
+              Optional. Connect your instance to send clips from the popup icon.
+            </p>
+          </div>
+
           <label className="block text-sm font-medium">
-            Timothy base URL
+            Base URL
             <input
               className={`${fieldClass} mt-1.5`}
               placeholder="https://timothy.example.com"
@@ -208,19 +243,24 @@ export function Options() {
                 onChange={(e) => setConsent(e.target.checked)}
               />
               <span>
-                I agree. Pounce may store these settings on this device. When I clip a
-                page, it may send that page only to this Timothy URL.
+                I agree. Pounce may store these settings on this device. When I click the Timothy
+                icon, it may send that page only to this Timothy URL.
               </span>
             </label>
           ) : null}
 
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
             <button type="submit" disabled={busy || (!configured && !consent)} className={btnPrimary}>
               {busy ? 'Working...' : 'Save'}
             </button>
-            <button type="button" disabled={busy} className={btnSecondary} onClick={() => void onTest()}>
+            <button type="button" disabled={busy || !configured} className={btnSecondary} onClick={() => void onTest()}>
               Test connection
             </button>
+            {configured ? (
+              <button type="button" disabled={busy} className={btnSecondary} onClick={() => void onDisconnect()}>
+                Disconnect
+              </button>
+            ) : null}
           </div>
         </form>
 
