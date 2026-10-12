@@ -37,6 +37,10 @@ function stripDocSuffix(title: string): string {
   return title.replace(/\s*-\s*google docs\s*$/i, '').trim()
 }
 
+function isLinkedInHost(host: string): boolean {
+  return host === 'linkedin.com' || host.endsWith('.linkedin.com')
+}
+
 function resolveAttr(el: Element, attr: string, baseUrl: string): void {
   const v = el.getAttribute(attr)
   if (!v || v.startsWith('#') || /^(mailto:|javascript:|data:)/i.test(v)) return
@@ -267,7 +271,7 @@ function genericFocused(doc: Document, pageUrl: string): ClipPayload | null {
 
 export function extractFocused(doc: Document, pageUrl: string): ClipPayload {
   const host = hostFromUrl(pageUrl)
-  const focused = host.includes('linkedin.com')
+  const focused = isLinkedInHost(host)
     ? extractLinkedInFocused(doc, pageUrl)
     : genericFocused(doc, pageUrl)
   if (focused && !focused.weak) return focused
@@ -281,7 +285,7 @@ export function extractPage(doc: Document, pageUrl: string): ClipPayload {
     const googleDocClip = extractGoogleDocs(doc, pageUrl)
     if (googleDocClip && !googleDocClip.weak) return googleDocClip
   }
-  if (host.includes('linkedin.com')) {
+  if (isLinkedInHost(host)) {
     const focused = extractLinkedInFocused(doc, pageUrl)
     if (focused && !focused.weak) return focused
   }
