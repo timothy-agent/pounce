@@ -6,7 +6,7 @@ import { callWorker } from '../shared/bridge'
 import { connectionStatus } from '../shared/connection'
 import { MAX_MARKDOWN_BYTES } from '../shared/constants'
 import { formatClip, markdownFilename } from '../shared/markdown'
-import type { ClipPayload, ClipResult, KbCollection, SettingsPublic } from '../shared/messages'
+import type { ClipPayload, ClipResult, ExtractMode, KbCollection, SettingsPublic } from '../shared/messages'
 import { TimothyGlyph } from '../shared/TimothyGlyph'
 import { documentUiUrl, utf8Bytes } from '../shared/url'
 import { btnIcon, btnPrimary, btnSecondary, fieldClass } from '../ui/controls'
@@ -36,6 +36,7 @@ export function Popup() {
   const [sending, setSending] = useState(false)
   const [result, setResult] = useState<ClipResult | null>(null)
   const [flash, setFlash] = useState<'copied' | 'saved' | ''>('')
+  const [extractMode, setExtractMode] = useState<ExtractMode>('page')
 
   const configured = settings?.configured === true
   const status = settings === null ? 'idle' : connectionStatus({ configured, apiOk })
@@ -76,6 +77,20 @@ export function Popup() {
       }
     })()
   }, [])
+
+  async function reextract(mode: ExtractMode): Promise<void> {
+    setBusy(true)
+    setError('')
+    setResult(null)
+    try {
+      const next = await callWorker<ClipPayload>({ type: 'EXTRACT', mode })
+      setClip(next)
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Could not extract this page')
+    } finally {
+      setBusy(false)
+    }
+  }
 
   const size = clip ? utf8Bytes(clip.markdown) : 0
   const oversize = size > MAX_MARKDOWN_BYTES
@@ -137,10 +152,32 @@ export function Popup() {
                 {flash === 'saved' ? <Notice kind="success" title="Saved as Markdown" /> : null}
                 {clip.weak ? (
                   <Notice kind="warning" title="Extraction looks weak">
-                    Review the markdown before you copy or save. Or select text and use
-                    &quot;Clip selection with Pounce&quot;.
+                    Review the markdown before you copy or save. Try Focused clip mode or
+                    select text and use &quot;Clip selection with Pounce&quot;.
                   </Notice>
                 ) : null}
+                <div className="flex items-end gap-2">
+                  <label className="block flex-1 text-xs font-medium text-muted-foreground">
+                    Clip mode
+                    <select
+                      className={`${fieldClass} mt-1.5`}
+                      value={extractMode}
+                      onChange={(e) => setExtractMode(e.target.value as ExtractMode)}
+                    >
+                      <option value="page">Page</option>
+                      <option value="focused">Focused post/section</option>
+                    </select>
+                  </label>
+                  <button
+                    type="button"
+                    className={btnSecondary}
+                    onClick={() => {
+                      void reextract(extractMode)
+                    }}
+                  >
+                    Re-extract
+                  </button>
+                </div>
                 <label className="block text-xs font-medium text-muted-foreground">
                   Title
                   <input

@@ -1,4 +1,4 @@
-import { extractPage, extractSelection } from '../shared/extract'
+import { extractFocused, extractPage, extractSelection } from '../shared/extract'
 import type { ContentExtractRequest, ContentExtractResponse, ExtractMode } from '../shared/messages'
 
 declare global {
@@ -18,6 +18,9 @@ function handle(req: ContentExtractRequest): ContentExtractResponse {
         }
       }
       return { ok: true, data: clip }
+    }
+    if (req.mode === 'focused') {
+      return { ok: true, data: extractFocused(document, location.href) }
     }
     return { ok: true, data: extractPage(document, location.href) }
   } catch (err) {

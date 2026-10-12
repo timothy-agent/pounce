@@ -43,7 +43,7 @@ export type ClipResult = {
   document: ClipDocument
 }
 
-export type ExtractMode = 'page' | 'selection'
+export type ExtractMode = 'page' | 'focused' | 'selection'
 
 export type WorkerRequest =
   | { type: 'EXTRACT'; mode: ExtractMode }

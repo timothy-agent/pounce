@@ -1,7 +1,7 @@
 import { JSDOM } from 'jsdom'
 import { describe, expect, it } from 'vitest'
 
-import { extractPage, extractSelection, markdownFromHtml } from './extract'
+import { extractFocused, extractPage, extractSelection, markdownFromHtml } from './extract'
 
 const PARA =
   'The deployment pipeline now waits for the canary to report a healthy error budget before promoting. ' +
@@ -96,6 +96,27 @@ describe('extractPage', () => {
     expect(clip.markdown).toContain('canary')
     expect(clip.url).toContain('linkedin.com')
   })
+
+  it('uses Google Docs rendered paragraph nodes when present', () => {
+    const url = 'https://docs.google.com/document/d/abc/edit'
+    const doc = load(
+      `<!doctype html><html><head><title>Quarterly Notes - Google Docs</title></head><body>
+        <div class="docs-titlebar-badges"></div>
+        <div class="kix-appview-editor">
+          <div class="kix-paragraphrenderer">Weekly release notes</div>
+          <div class="kix-paragraphrenderer">• Improved extraction quality for social feeds.</div>
+          <div class="kix-paragraphrenderer">• Added fallback for weak article parsing.</div>
+          <div class="kix-paragraphrenderer">${PARA}</div>
+        </div>
+      </body></html>`,
+      url,
+    )
+    const clip = extractPage(doc, url)
+    expect(clip.title).toBe('Quarterly Notes')
+    expect(clip.markdown).toContain('Weekly release notes')
+    expect(clip.markdown).toContain('- Improved extraction quality for social feeds.')
+    expect(clip.markdown).toContain('canary')
+  })
 })
 
 describe('extractSelection', () => {
@@ -106,6 +127,27 @@ describe('extractSelection', () => {
       url,
     )
     expect(extractSelection(doc, url)).toBeNull()
+  })
+
+  describe('extractFocused', () => {
+    it('prefers the main LinkedIn post content over sidebar chrome', () => {
+      const url = 'https://www.linkedin.com/feed/update/urn:li:activity:1'
+      const doc = load(
+        `<!doctype html><html><head><title>Feed | LinkedIn</title></head><body>
+          <main>
+            <aside>People you may know. Grow your network.</aside>
+            <div class="feed-shared-update-v2" data-urn="urn:li:activity:1">
+              <p>${PARA}</p>
+              <p>${PARA}</p>
+            </div>
+          </main>
+        </body></html>`,
+        url,
+      )
+      const clip = extractFocused(doc, url)
+      expect(clip.markdown).toContain('canary')
+      expect(clip.markdown).not.toContain('People you may know')
+    })
   })
 
   it('clips the selected range and keeps the page URL', () => {
